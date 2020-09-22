@@ -1,0 +1,78 @@
+@import "../../../stylesVariables.scss";
+.navbar {
+  min-height: 80px;
+  height: 100%;
+  background: $dark;
+
+  &-nav {
+    padding: 0 $padXs;
+  }
+
+  .nav-link {
+    font-size: $fontMd;
+    padding-right: $padMd;
+    letter-spacing: $letterSpacingSm;
+    font-weight: 200;
+    color: $white;
+    &.active {
+      color: $darkOrange;
+    }
+    &:hover {
+      color: $orange;
+    }
+  }
+
+  &-toggler {
+    outline-color: $orange;
+  }
+
+  &-brand {
+    display: flex;
+    align-items: center;
+    font-size: $fontXLg;
+    margin-left: $padBg;
+    letter-spacing: $letterSpacingMd;
+    font-weight: 200;
+    color: $white;
+    img {
+      height: $imgLg;
+      width: $imgLg;
+    }
+  }
+}
+
+@media only screen and (min-width: 1800px) {
+  .navbar {
+    .nav-link {
+      font-size: $fontLg;
+    }
+    &-brand {
+      font-size: $fontXLg;
+      margin-left: $padLg;
+    }
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .navbar {
+    .nav-link {
+      margin-left: $padLg;
+    }
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .navbar {
+    padding: $padXs;
+    background: $dark;
+    &-brand {
+      font-size: $fontLg;
+      padding: 0 $padXs;
+      margin-left: $padXs;
+      img {
+        height: $imgMd;
+        width: $imgMd;
+      }
+    }
+  }
+}

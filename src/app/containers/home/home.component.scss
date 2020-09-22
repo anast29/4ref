@@ -1,0 +1,149 @@
+@import "../../../stylesVariables.scss";
+
+.content {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px);
+  background: $transparentDark;
+  text-align: center;
+  color: $white;
+  &-title {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0;
+    margin-bottom: $padSm;
+    &-text {
+      font-size: $fontBg;
+      letter-spacing: $letterSpacingMd;
+      white-space: nowrap;
+    }
+    &-line {
+      content: "";
+      display: flex;
+      width: 350px;
+      height: 2px;
+      margin: 0 $padXs;
+      background: $white;
+    }
+  }
+  &-navigation {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    margin: $padBg auto;
+  }
+  &-btn {
+    transition: 450ms;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    padding: 0 $padMd;
+    margin-right: $padXs;
+    border-radius: 50px;
+    vertical-align: middle;
+    text-decoration: none;
+    font-size: $fontBg;
+    cursor: pointer;
+    color: $white;
+
+    &-reference {
+      background: $orange;
+      &:hover {
+        background: $darkOrange;
+      }
+    }
+
+    &-bibliography {
+      border: 1px solid $orange;
+      color: $orange;
+      &:hover {
+        color: $darkOrange;
+        border: 1px solid $darkOrange;
+      }
+    }
+  }
+}
+
+.lead {
+  padding: $padXs 0;
+}
+
+@media only screen and (min-width: 1800px) {
+  .display-3 {
+    font-size: 5rem;
+  }
+  .lead {
+    font-size: 1.75rem;
+  }
+  .content {
+    min-height: calc(100vh - 120px);
+    &-navigation {
+      margin: 3em auto;
+    }
+    &-title {
+      &-text {
+        font-size: $fontXLg;
+      }
+    }
+    &-btn {
+      min-height: 80px;
+      font-size: $fontLg;
+      padding: 0 $padMd;
+    }
+  }
+}
+
+@media only screen and (max-width: 1224px) {
+  .display-3 {
+    font-size: 3.5rem;
+  }
+  .lead {
+    font-size: $fontBg;
+  }
+  .content {
+    min-height: calc(100vh - 80px);
+    &-navigation {
+      margin: 1.25em auto;
+    }
+    &-btn {
+      font-size: $fontMd;
+      padding: 0 $padMd;
+    }
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .display-3 {
+    font-size: 2.25rem;
+  }
+  .lead {
+    font-size: $fontMd;
+  }
+  .content {
+    min-height: calc(100vh - 80px);
+    &-navigation {
+      margin: 2em auto;
+    }
+    &-title {
+      &-text {
+        font-size: $fontMd;
+      }
+      &-line {
+        width: 100px;
+        height: 1px;
+      }
+    }
+    &-btn {
+      font-size: $fontXs;
+      padding: 0 $padXs;
+      height: 45px;
+    }
+  }
+}

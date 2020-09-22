@@ -1,0 +1,82 @@
+@import "../../../stylesVariables.scss";
+.navbar {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  min-height: 80px;
+  height: 100%;
+  padding: $padLg;
+  background: $dark;
+  &-main {
+    display: flex;
+    align-items: baseline;
+    color: $white;
+    &-img {
+      font-size: $fontBg;
+      img {
+        height: $imgMd;
+        width: $imgMd;
+      }
+    }
+    &-separator {
+      font-size: $fontSm;
+      padding-right: $padXXS;
+    }
+    &-text {
+      font-size: $fontSm;
+    }
+  }
+  &-created {
+    display: flex;
+    justify-content: center;
+    font-size: $fontXs;
+  }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+  .navbar {
+    padding: $padLg;
+    &-main {
+      &-img {
+        font-size: $fontMd;
+        img {
+          height: $imgSm;
+          width: $imgSm;
+        }
+      }
+      &-separator {
+        font-size: $fontSm;
+      }
+      &-text {
+        font-size: $fontSm;
+      }
+    }
+    &-created {
+      font-size: $fontXs;
+    }
+  }
+}
+
+@media only screen and (min-width: 1800px) {
+  .navbar {
+    padding: $padLg;
+    &-main {
+      &-img {
+        font-size: $fontLg;
+        img {
+          height: $imgBg;
+          width: $imgBg;
+        }
+      }
+      &-separator {
+        font-size: $fontBg;
+      }
+      &-text {
+        font-size: $fontBg;
+      }
+    }
+    &-created {
+      font-size: $fontMd;
+    }
+  }
+}

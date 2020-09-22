@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <a class="navbar-brand" routerLink="/">
+    <img src="assets/img/quill.png">ONAFT4Ref</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarToggler">
+    <ul class="navbar-nav ">
+      <li class="nav-item">
+        <a class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" routerLink="/"> Головна</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLinkActive]="['active']" routerLink="/references">Посилання</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLinkActive]="['active']" routerLink="/bibliography">Бібліографічний опис</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " [routerLinkActive]="['active']" routerLink="/about"> Інструкція</a>
+      </li>
+    </ul>
+  </div>
+</nav>

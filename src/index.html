@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+  <meta charset="utf-8">
+  <title>ONAFT4Ref</title>
+  <base href="/">
+  <meta http-equiv="Cache-Control" content="max-age=31536000, must-revalidate"/>
+  <meta property="title" content="ONAFT4Ref">
+  <meta name="description" content="Cервіс для автоматизованого оформлення бібліографічних посилань та бібіліографічного
+        опису за повним переліком наукових робіт, завдяки зручному інструментарію та адаптивності під будь-які пристрої.">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i&display=swap&subset=cyrillic,cyrillic-ext" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="feather.png" >
+</head>
+<body>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114133787-16"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-114133787-16');
+</script>
+<app-root>
+  <style>
+    /**#d78737*/
+    body {
+      background: #050512;
+      overflow: hidden;
+      height: 100vh;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      overflow: hidden;
+      animation-delay: 1s;
+    }
+
+    .item-1 {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #d78737;
+      margin: 7px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    @keyframes scale {
+      0% {
+        transform: scale(1);
+      }
+      50%,
+      75% {
+        transform: scale(2.5);
+      }
+      78%, 100% {
+        opacity: 0;
+      }
+    }
+    .item-1:before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #d78737;
+      opacity: 0.7;
+      animation: scale 2s infinite cubic-bezier(0, 0, 0.49, 1.02);
+      animation-delay: 200ms;
+      transition: 0.5s all ease;
+      transform: scale(1);
+    }
+
+    .item-2 {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #d78943;
+      margin: 7px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    @keyframes scale {
+      0% {
+        transform: scale(1);
+      }
+      50%,
+      75% {
+        transform: scale(2.5);
+      }
+      78%, 100% {
+        opacity: 0;
+      }
+    }
+    .item-2:before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #d78943;
+      opacity: 0.7;
+      animation: scale 2s infinite cubic-bezier(0, 0, 0.49, 1.02);
+      animation-delay: 400ms;
+      transition: 0.5s all ease;
+      transform: scale(1);
+    }
+    .item-3 {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #d78943;
+      margin: 7px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    @keyframes scale {
+      0% {
+        transform: scale(1);
+      }
+      50%,
+      75% {
+        transform: scale(2.5);
+      }
+      78%, 100% {
+        opacity: 0;
+      }
+    }
+    .item-3:before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #d78943;
+      opacity: 0.7;
+      animation: scale 2s infinite cubic-bezier(0, 0, 0.49, 1.02);
+      animation-delay: 600ms;
+      transition: 0.5s all ease;
+      transform: scale(1);
+    }
+    .item-4 {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #d79953;
+      margin: 7px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    @keyframes scale {
+      0% {
+        transform: scale(1);
+      }
+      50%,
+      75% {
+        transform: scale(2.5);
+      }
+      78%, 100% {
+        opacity: 0;
+      }
+    }
+    .item-4:before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #d78953;
+      opacity: 0.7;
+      animation: scale 2s infinite cubic-bezier(0, 0, 0.49, 1.02);
+      animation-delay: 800ms;
+      transition: 0.5s all ease;
+      transform: scale(1);
+    }
+
+    .item-5 {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #d79953;
+      margin: 7px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    @keyframes scale {
+      0% {
+        transform: scale(1);
+      }
+      50%,
+      75% {
+        transform: scale(2.5);
+      }
+      78%, 100% {
+        opacity: 0;
+      }
+    }
+    .item-5:before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #d79953;
+      opacity: 0.7;
+      animation: scale 2s infinite cubic-bezier(0, 0, 0.49, 1.02);
+      animation-delay: 1000ms;
+      transition: 0.5s all ease;
+      transform: scale(1);
+    }
+
+  </style>
+  <div class="container">
+    <div class="item-1"></div>
+    <div class="item-2"></div>
+    <div class="item-3"></div>
+    <div class="item-4"></div>
+    <div class="item-5"></div>
+  </div>
+</app-root>
+</body>
+</html>

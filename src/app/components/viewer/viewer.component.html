@@ -1,0 +1,34 @@
+<div [formGroup]="form" class="row">
+
+  <div class="authors" formArrayName="authors" *ngFor="let author of authors; let i = index">
+    <ng-container [formGroupName]="i">
+      <mat-form-field class="col-lg-4 col-md-4 col-sm-12">
+        <mat-label>Прізвище автора</mat-label>
+        <input matInput type="text" formControlName="lastName" required>
+      </mat-form-field>
+      <mat-form-field class="col-lg-4 col-md-4 col-sm-12">
+        <mat-label>Ім'я автора</mat-label>
+        <input matInput type="text" formControlName="name" required>
+      </mat-form-field>
+      <mat-form-field class="col-lg-4 col-md-4 col-sm-12">
+        <mat-label>По-батькові автора</mat-label>
+        <input matInput type="text" formControlName="patronymic">
+      </mat-form-field>
+    </ng-container>
+  </div>
+
+  <div [class]="item.className" *ngFor="let item of selectModel">
+    <mat-form-field class="form-field">
+      <mat-label>{{item.title}}</mat-label>
+      <input matInput [type]="item?.inputType" [formControlName]="item.key" [placeholder]="item.placeholder"
+        [required]="item.required">
+      <mat-error *ngIf="form.get(item.key).hasError('required')">
+        Заповніть поле.
+      </mat-error>
+      <mat-error *ngIf="form.get(item.key).hasError('pattern')">
+        Некоректні дані.
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+</div>

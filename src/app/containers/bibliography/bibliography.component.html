@@ -1,0 +1,206 @@
+<div class="container-fluid reference-container">
+    <h2 class="reference-container__title">Оформлення бібліографічного опису</h2>
+    <div class="row">
+        <div class="container col-lg-12 col-sm-12 col-md-12">
+            <form [formGroup]="viewerForm" class="form">
+                <div class="reference-container__nav-block">
+                    <mat-form-field class="reference-container__dropdown reference-container__dropdown__resource">
+                        <mat-label>Оберіть джерело для посилання</mat-label>
+                        <mat-select [formControl]="selectedBook" (selectionChange)="onChangeBooksOption()">
+                            <mat-option *ngFor="let option of dropdownBooksOptions" [value]="option.value">
+                                {{option.title}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="reference-container__dropdown">
+                        <mat-label>Кількість авторів</mat-label>
+                        <mat-select [(ngModel)]="defaultAuthor" [formControl]="selectedAuthors"
+                            (selectionChange)="onChangeAuthorsOption()" [disabled]="disabledAuthorsDropdown">
+                            <mat-option *ngFor="let option of dropdownAuthorsOptions" [value]="option.value">
+                                {{option.title}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="reference-container__dropdown">
+                        <mat-label>Мова</mat-label>
+                        <mat-select [(ngModel)]="defaultLanguage" [formControl]="selectedLanguage"
+                            (selectionChange)="onChangeLanguageOption()">
+                            <mat-select-trigger>
+                                <svg-icon
+                                    class="reference-container__dropdown__icon"
+                                    src="assets/svg/{{selectedLanguage.value}}.svg"
+                                    [stretch]="true"
+                                    [svgStyle]="{ 'width.px': 22, 'height.px': 16 }"
+                                ></svg-icon>
+                                {{selectedLanguageTitle}}
+                            </mat-select-trigger>
+                            <mat-option *ngFor="let option of dropdownLanguagesOptions" [value]="option.value">
+                                <svg-icon
+                                    class="reference-container__dropdown__icon"
+                                    src="assets/svg/{{option.value}}.svg"
+                                    [stretch]="true"
+                                    [svgStyle]="{ 'width.px': 22, 'height.px': 16 }"
+                                ></svg-icon>
+                                {{option.title}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <button type="button" class="btn justify-content-center reference-container__create-button"
+                        [disabled]="viewerForm.invalid || isEmpty(viewerForm.controls)" (click)="createList()">
+                        Створити опис
+                    </button>
+                </div>
+
+                <div class="reference-container__dependence-block">
+                    <ng-container *ngIf="selectedBook.value === SELECTED_PAPER">
+                        <mat-form-field class="reference-container__dropdown reference-container__dropdown__article">
+                            <mat-label>Оберіть тип статті</mat-label>
+                            <mat-select [formControl]="selectedPaper" (selectionChange)="onChangePapersOption()">
+                                <mat-option *ngFor="let option of dropdownPapersOptions" [value]="option.value">
+                                    {{option.title}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </ng-container>
+
+                    <ng-container *ngIf="selectedBook.value === SELECTED_ELECTRONIC">
+                        <mat-form-field class="reference-container__dropdown reference-container__dropdown__electronic">
+                            <mat-label>Оберіть тип елек-но ресурса</mat-label>
+                            <mat-select [formControl]="selectedElectronic"
+                                (selectionChange)="onChangeElectronicOption()">
+                                <mat-option *ngFor="let option of dropdownElectronicResourceOptions"
+                                    [value]="option.value">
+                                    {{option.title}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </ng-container>
+
+                    <ng-container *ngIf="selectedBook.value === SELECTED_RULES_AND_REGULATIONS">
+                        <mat-form-field class="reference-container__dropdown reference-container__dropdown__electronic">
+                            <mat-label>Оберіть тип норми і правила</mat-label>
+                            <mat-select [formControl]="selectedRules" (selectionChange)="onChangeRulesOption()">
+                                <mat-option *ngFor="let option of dropdownRulesResourceOptions" [value]="option.value">
+                                    {{option.title}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </ng-container>
+
+                    <ng-container *ngIf="selectedBook.value === SELECTED_CARTOGRAPHIC_EDITIONS">
+                        <mat-form-field class="reference-container__dropdown reference-container__dropdown__electronic">
+                            <mat-label>Оберіть тип картографії</mat-label>
+                            <mat-select [formControl]="selectedCartographic" (selectionChange)="onChangeCardsOption()">
+                                <mat-option *ngFor="let option of dropdownCartographicResourceOptions"
+                                    [value]="option.value">
+                                    {{option.title}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </ng-container>
+                </div>
+
+                <ng-container *ngIf="selectedModel; else mainInfo">
+                    <app-viewer *ngIf="displayBooksContent" [selectModel]="selectedModel" [form]="viewerForm">
+                    </app-viewer>
+                </ng-container>
+
+                <ng-template #mainInfo>
+                    <div class="reference-container__default-info">
+                        <p class="reference-container__default-info__text">Перед початком оформлення бібліографічного
+                            опису ознайомтесь з <a routerLink="/about"
+                                class="reference-container__default-info__link">інструкцією ONAFT4Ref</a> для
+                            користувача </p>
+                    </div>
+                </ng-template>
+            </form>
+        </div>
+
+
+        <div class="col-lg-12 col-sm-12 col-md-12 reference-container__table">
+            <div class="mat-elevation-z8">
+                <mat-toolbar>
+                    <mat-toolbar-row>
+                        <span>Бібліографічний опис</span>
+                        <button mat-icon-button class="reference-container__table__menu-button"
+                            [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item class="reference-container__table__button"
+                                (click)="deleteListItems()">
+                                <mat-icon>delete_outline</mat-icon>
+                                <span>Видалити записи</span>
+                            </button>
+                            <button mat-menu-item class="reference-container__table__button" (click)="saveList()">
+                                <mat-icon>file_download</mat-icon>
+                                <span>Завантажити записи</span>
+                            </button>
+                        </mat-menu>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+                <div *ngIf="isEmptyDataSource; else dataTable" class="reference-container__table__empty">Не знайдено
+                    жодного запису</div>
+
+                <ng-template #dataTable>
+
+                    <mat-form-field class="reference-container__table__table-filter">
+                        <mat-label class="reference-container__table__table-filter__label">
+                            Пошук за бібліографічним описом
+                        </mat-label>
+                        <mat-icon matSuffix>search</mat-icon>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Введіть значення для пошуку">
+                    </mat-form-field>
+
+                    <table mat-table cdkDropList #table [dataSource]="dataSource" [cdkDropListData]="dataSource.data"
+                        matSort (cdkDropListDropped)="drop($event)">
+
+                        <ng-container matColumnDef="reference">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Створений бібліографічний опис
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element" [innerHTML]="element.reference"></mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="transliteration">
+                            <mat-header-cell *matHeaderCellDef>Транслітерація </mat-header-cell>
+                            <mat-cell *matCellDef="let element" [innerHTML]="element.transliteration"></mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="button">
+                            <mat-header-cell *matHeaderCellDef class="reference-container__table__button-block">
+                            </mat-header-cell>
+                            <mat-cell *matCellDef="let element" class="reference-container__table__button-block">
+                                <button mat-icon-button (click)="deleteListItem(element)"
+                                    class="reference-container__table__button">
+                                    <mat-icon matTooltip="Видалити бібліографічний опис">delete_outline</mat-icon>
+                                </button>
+                                <button mat-icon-button [cdkCopyToClipboard]="copyContent(element)"
+                                    class="reference-container__table__button">
+                                    <mat-icon svgIcon="fileCopy" matTooltip="Копіювати"></mat-icon>
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;" cdkDrag></mat-row>
+                    </table>
+
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mobile-reference-container">
+    <div class="mobile-reference-container-content">
+        <a class="mobile-reference-container-content-img" routerLink="/">
+            <img src="assets/img/quill.png">ONAFT4Ref</a>
+        <span class="mobile-reference-container-content-text">Для зручного оформлення літератури скористайтеся
+            настільними
+            пристроями або планшетом.</span>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+@import "../../../stylesVariables.scss";
+
+.about-container {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: flex-start;
+  justify-content: center;
+  padding: $padMd;
+  background: rgba(0, 0, 0, 0.4);
+  padding: $padSm $padLg;
+  color: $white;
+  &__text {
+    font-size: $fontBg;
+    line-height: 1.5em;
+  }
+  &__link {
+    color: $white;
+    font-size: $fontBg;
+    text-decoration: none;
+    &:hover {
+      color: $darkOrange;
+    }
+  }
+  &__container-img {
+    margin: $padXs 0;
+    &__img {
+      height: auto;
+      width: 100%;
+      padding: 0 $padXXS;
+    }
+    &__img-about {
+      height: auto;
+    }
+  }
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  .about-container {
+    padding: $padSm $padMd;
+    min-height: calc(100vh - 140px);
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 767px) {
+  .about-container {
+    padding: $padMd;
+    &__container-img {
+      margin: 0;
+      &__img {
+        width: 100%;
+        height: auto;
+        margin: $padXXS 0;
+      }
+    }
+  }
+  .display-3 {
+    font-size: 42px;
+  }
+}

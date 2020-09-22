@@ -1,0 +1,116 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css";
+@import "./stylesVariables.scss";
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  background: $white;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drop-list-dragging .mat-row:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.mat-simple-snackbar {
+  text-align: center;
+}
+
+.mat-header-row {
+  padding: 0 $padXXS;
+}
+
+.mat-row {
+  padding: 0 $padXXS;
+}
+
+.mat-header-cell {
+  padding: 5px 10px 5px 0;
+  font-weight: 400;
+  &:first-of-type {
+    padding-left: 10px;
+  }
+}
+
+.mat-cell {
+  display: flex;
+  padding: 5px 10px 5px 0;
+  &:first-of-type {
+    padding-left: 10px;
+  }
+}
+
+.mat-sort-header-button {
+  outline: none;
+  &:focus {
+    outline: none;
+  }
+}
+
+.mat-form-field {
+  margin-top: 5px;
+}
+
+.mat-form-field-infix {
+  padding: 5px 0;
+}
+
+.mat-form-field-infix {
+  display: flex;
+  border-top: none;
+}
+
+.mat-header-row {
+  height: 50px;
+}
+
+.mat-header-cell {
+  font-size: $fontMd;
+}
+
+.mat-toolbar-row {
+  position: relative;
+  padding: 0 $padMd;
+  color: #505050;
+  font-weight: 400;
+}
+
+.mat-select-panel .mat-option {
+  height: 2.5em;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-subscript-wrapper {
+  top: calc(100% - 2.25em);
+}
+
+html {
+  background-color: #050512;
+}
+
+body {
+  position: relative;
+  font-family: "Montserrat", sans-serif;
+  min-height: 100vh;
+  width: 100%;
+  background: url("assets/img/new_back.jpg") rgba(0, 0, 0, 0.5) no-repeat top;
+  background-blend-mode: multiply;
+  background-size: cover;
+  box-sizing: border-box;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(252, 252, 252, 0.3);
+    border-radius: 10px;
+  }
+}
