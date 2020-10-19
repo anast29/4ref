@@ -5,7 +5,7 @@ export const SELECTED_YEAR_BOOK: Array<TSelectParams> = [
   {
     title: "Щорічник:",
     key: "bookName",
-    placeholder: "Наукова поезія ХХ століття",
+    placeholder: "Наукова поезія XX століття",
     className: "col-lg-6 col-sm-6 col-md-6",
     required: true,
     validators: Validators.required,

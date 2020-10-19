@@ -45,17 +45,68 @@ export class ReferencesService extends BaseComponent {
   /**
    *
    * @selected "Книга"
-   * @selected "Збірник наук. праць і мат-в кон-цій"
    * @selected "Багатотомне видання"
-   * @selected "Глава, розділ книги"
    */
   private getBookItemReference(values: TValues): TCreatedTableItem {
     const {
       authors = "",
       articleEditor,
-      copyrigth,
       volumeNum,
       volumeName,
+      typeOfWork,
+      publisher,
+      pages,
+      bookName,
+      city,
+      year,
+    } = values;
+
+    const {
+      biblBookEditor,
+      bookEditor,
+      pages: pagesSgn,
+      volume: volumeSgn
+    } = this.selectedSigns;
+
+    const bookNameStr = this.translateToUppercase(bookName);
+    const typeOfWorkStr = this.getExtensionValue(typeOfWork, LOWERCASE);
+    const articleEditorStr = this.getEditorValue(articleEditor, {
+      firstSign: this.isMoreThanFourAuthors ? biblBookEditor : bookEditor
+    });
+
+    const cityStr = this.translateToUppercase(city);
+    const publisherStr = this.getExtensionValue(publisher, UPPERCASE);
+    const yearStr = this.getYearValue(year);
+    const pagesStr = this.getPagesValue(pages, {
+      lastSign: pagesSgn
+    });
+
+    // if selected multi-volume books option
+    const volumeValueStr = this.getVolumeValue(
+      volumeNum,
+      volumeName,
+      volumeSgn
+    );
+
+    const mainPart = `${bookNameStr}${typeOfWorkStr}`;
+    const partWithAuthors = this.addAuthorsToRefer(
+      authors,
+      mainPart,
+      this.selectedSigns,
+      this.isMoreThanFourAuthors
+    );
+
+    const reference = `${partWithAuthors}${articleEditorStr}. ${cityStr}${publisherStr}${yearStr}${volumeValueStr}${pagesStr}.`;
+    const transliteration = this.getTransliteration(reference);
+
+    return { reference, transliteration };
+  }
+
+  /** @selected "Глава, розділ книги" */
+  private getPartOfBookReference(values: TValues): TCreatedTableItem {
+    const {
+      authors = "",
+      articleEditor,
       typeOfWork,
       nameOfPart,
       partOfBook,
@@ -65,49 +116,38 @@ export class ReferencesService extends BaseComponent {
       city,
       year,
     } = values;
+
+    const {bookEditor, biblBookEditor, scaleOfPages, topic} = this.selectedSigns;
+
     const bookNameStr = this.translateToUppercase(bookName);
+    const nameOfPartStr = this.translateToUppercase(nameOfPart);
     const typeOfWorkStr = this.getExtensionValue(typeOfWork, LOWERCASE);
     const articleEditorStr = this.getEditorValue(articleEditor, {
-      firstSign: this.selectedSigns.bookEditor,
+      firstSign: this.isMoreThanFourAuthors ? biblBookEditor : bookEditor
     });
+
     const cityStr = this.translateToUppercase(city);
     const publisherStr = this.getExtensionValue(publisher, UPPERCASE);
     const yearStr = this.getYearValue(year);
-    const pagesSign = nameOfPart
-      ? { firstSign: this.selectedSigns.scaleOfPages }
-      : { lastSign: this.selectedSigns.pages };
-    const pagesStr = this.getPagesValue(pages, pagesSign);
-
-    // if selected science works option
-    const copyrigthStr = this.transformValue(copyrigth, UPPERCASE, {
-      firstSign: " / ",
+    const pagesStr = this.getPagesValue(pages, {
+      firstSign: scaleOfPages 
     });
-
-    // if selected multi-volume books option
-    const volumeValueStr = this.getVolumeValue(
-      volumeNum,
-      volumeName,
-      this.selectedSigns.volume
-    );
 
     // if selected part of book orion
-    const nameOfPartStr = this.transformValue(nameOfPart, UPPERCASE, {
-      lastSign: " / ",
-    });
     const partOfBookStr = this.transformValue(partOfBook, LOWERCASE, {
-      firstSign: this.selectedSigns.topic,
+      firstSign: topic,
       lastSign: ". ",
     });
 
-    const mainPart = `${nameOfPartStr}${bookNameStr}${typeOfWorkStr}`;
-    const partWithAuthors = this.addAuthorsToBookRefer(
+    const mainPart = `${nameOfPartStr} // ${bookNameStr}${typeOfWorkStr}`;
+    const partWithAuthors = this.addAuthorsToRefer(
       authors,
       mainPart,
       this.selectedSigns,
       this.isMoreThanFourAuthors
     );
 
-    const reference = `${partWithAuthors}${articleEditorStr}${copyrigthStr}${cityStr}${publisherStr}${yearStr}. ${volumeValueStr}${partOfBookStr}${pagesStr}.`;
+    const reference = `${partWithAuthors}${articleEditorStr}. ${cityStr}${publisherStr}${yearStr}. ${partOfBookStr}${pagesStr}.`;
     const transliteration = this.getTransliteration(reference);
 
     return { reference, transliteration };
@@ -133,15 +173,14 @@ export class ReferencesService extends BaseComponent {
       firstSign: this.selectedSigns.scaleOfPages,
     });
 
-    const mainPart = `${bookNameStr} // ${typeOfWork}`;
     const partWithAuthors = this.addAuthorsToRefer(
       authors,
-      mainPart,
+      bookNameStr,
       this.selectedSigns,
       this.isMoreThanFourAuthors
     );
 
-    const reference = `${partWithAuthors} / ${copyrigth}. ${cityStr}${publisherStr}${yearStr}. ${pagesStr}.`;
+    const reference = `${partWithAuthors} // ${typeOfWork} / ${copyrigth}. ${cityStr}${publisherStr}${yearStr}. ${pagesStr}.`;
     const transliteration = this.getTransliteration(reference);
 
     return { reference, transliteration };
@@ -159,6 +198,7 @@ export class ReferencesService extends BaseComponent {
   /** @selected "Опис стандартів" */
   private getStandartItemReference(values: TValues): TCreatedTableItem {
     const { iso, name, pages, year, city } = values;
+    const { pages: pagesSgn } = this.selectedSigns;
 
     const nameStr = this.translateToUppercase(name);
     const isoStr = this.translateToUppercase(iso);
@@ -166,7 +206,7 @@ export class ReferencesService extends BaseComponent {
     const cityStr = this.translateToUppercase(city);
     const yearStr = this.getYearValue(year);
     const pagesStr = this.getPagesValue(pages, {
-      lastSign: this.selectedSigns.pages,
+      lastSign: pagesSgn,
     });
 
     const reference = `${isoStr}. ${nameStr}. ${cityStr}${yearStr}. ${pagesStr}.`;
@@ -233,9 +273,8 @@ export class ReferencesService extends BaseComponent {
         ? this.selectedSigns.thesis
         : this.selectedSigns.thesisByDegree,
     });
-    const degreeStr = this.getExtensionValue(degree, LOWERCASE);
+    const degreeStr = this.transformValue(degree);
     const cipherStr = this.transformValue(cipher, LOWERCASE, {
-      firstSign: ": ",
       lastSign: this.selectedSigns.safeValue,
     });
     const dateOfProtectStr = this.editerDate(dateOfProtect);
@@ -250,7 +289,7 @@ export class ReferencesService extends BaseComponent {
       lastSign: this.selectedSigns.pages,
     });
 
-    const reference = `${author} ${workNameStr}${degreeStr} ${cipherStr}${dateOfProtectStr}${scienceCouchStr}. ${cityStr}${publisherStr}${yearStr}. ${pagesStr}.`;
+    const reference = `${author} ${workNameStr}${degreeStr} : ${cipherStr}${dateOfProtectStr}${scienceCouchStr}. ${cityStr}${publisherStr}${yearStr}. ${pagesStr}.`;
     const transliteration = this.getTransliteration(reference);
     return { reference, transliteration };
   }
@@ -322,10 +361,11 @@ export class ReferencesService extends BaseComponent {
       city,
       year,
     } = values;
+    const {bookEditor, biblBookEditor, scaleOfPages} = this.selectedSigns;
     const bookNameStr = this.translateToUppercase(bookName);
     const paperNameStr = this.translateToUppercase(paperName);
     const articleEditorStr = this.getEditorValue(articleEditor, {
-      firstSign: this.selectedSigns.bookEditor,
+      firstSign: this.isMoreThanFourAuthors ? biblBookEditor : bookEditor,
     });
     const authorsOfBookStr = this.transformValue(authorsOfBook, UPPERCASE, {
       firstSign: ' / ',
@@ -334,7 +374,7 @@ export class ReferencesService extends BaseComponent {
 
     const cityStr = this.translateToUppercase(city);
     const pagesStr = this.getPagesValue(pages, {
-      firstSign: this.selectedSigns.scaleOfPages,
+      firstSign: scaleOfPages,
     });
     const partWithAuthors = this.addAuthorsToRefer(
       authors,
@@ -435,7 +475,7 @@ export class ReferencesService extends BaseComponent {
     const resourceStr = this.transformValue(resource);
     const dateStr = this.editerDate(date);
     const appendPart = this.getElectronicCityValue(city, year);
-    // TODO: Figure out how better add the url with link to references
+    // @TODO: Figure out how better add the url with link to references
     // const urlStr = this.getUrlValue(url);
 
     const partWithAuthors = this.addAuthorsToRefer(
@@ -463,7 +503,7 @@ export class ReferencesService extends BaseComponent {
     });
     const dateStr = this.editerDate(date);
     const appendPart = this.getElectronicCityValue(city, year);
-    // TODO: Figure out how better add the url with link to references
+    // @TODO: Figure out how better add the url with link to references
     // const urlStr = this.getUrlValue(url);
 
     const reference = `${pageOfWebsiteStr}${nameOfWebsiteStr}.${appendPart} URL: ${url} (${this.selectedSigns.date} ${dateStr}).`;
@@ -479,7 +519,7 @@ export class ReferencesService extends BaseComponent {
     });
     const dateStr = this.editerDate(date);
     const appendPart = this.getElectronicCityValue(city, year);
-    // TODO: Figure out how better add the url with link to references
+    // @TODO: Figure out how better add the url with link to references
     // const urlStr = this.getUrlValue(url);
 
     const reference = `${nameOfWebsiteStr}.${appendPart} URL: ${url} (${this.selectedSigns.date} ${dateStr}).`;
@@ -535,8 +575,9 @@ export class ReferencesService extends BaseComponent {
     switch (option) {
       case BOOK_ITEM:
       case MULTI_VOLUME_BOOKS_ITEM:
-      case PART_OF_BOOK_ITEM:
         return this.getBookItemReference(values);
+      case PART_OF_BOOK_ITEM:
+        return this.getPartOfBookReference(values);
       case SCIENCE_WORKS_ITEM:
         return this.getScienceWork(values);
       case SERIES_RESOURSE_ITEM:

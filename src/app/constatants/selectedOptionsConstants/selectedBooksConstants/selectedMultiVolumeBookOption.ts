@@ -7,7 +7,7 @@ export const SELECTED_MULTI_VOLUME_BOOK: Array<TSelectParams> = [
   {
     title: "Назва роботи:",
     key: "bookName",
-    placeholder: "Наукова поезія ХХ століття",
+    placeholder: "Наукова поезія XX століття",
     className: "col-lg-6 col-sm-6 col-md-6",
     required: true,
     validators: Validators.required,
@@ -15,7 +15,7 @@ export const SELECTED_MULTI_VOLUME_BOOK: Array<TSelectParams> = [
   {
     title: "Назва тому:",
     key: "volumeName",
-    placeholder: "монографія",
+    placeholder: "Енцикл. Сучас. України",
     className: "col-lg-6 col-sm-6 col-md-6",
     required: false
   },

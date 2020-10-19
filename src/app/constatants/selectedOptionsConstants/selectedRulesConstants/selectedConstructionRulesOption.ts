@@ -13,7 +13,7 @@ export const SELECTED_CONSTRUCTION_RULES: Array<TSelectParams> = [
   {
     title: "Назва стандурту:",
     key: "nameOfStandart",
-    placeholder: "Вишукування, проектування і територіальна діяльність. ",
+    placeholder: "Вишукування, проектування і територіальна діяльність.",
     className: "col-lg-6 col-sm-6 col-md-6",
     required: true,
     validators: Validators.required,

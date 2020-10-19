@@ -20,7 +20,7 @@ export const SELECTED_PRICE_LIST: Array<TSelectParams> = [
   {
     title: "Затверджений:",
     key: "approved",
-    placeholder: " Держкомцін СРСР 21.06.74",
+    placeholder: "Держкомцін СРСР 21.06.74",
     className: "col-lg-6 col-sm-6 col-md-6",
     required: false,
   },

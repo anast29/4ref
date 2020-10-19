@@ -85,18 +85,10 @@ export abstract class BaseComponent {
       : `${authorStr} ${mainPart}${biblPart}`;
   }
 
-  public addAuthorsToBookRefer(
-    authors: TAuthorsModelSelected[],
-    mainPart: string,
-    selectedSigns: TSelectSignsParams,
-    isMoreThanFourAuthors: boolean
-  ): string {
-    if (!authors) return `${mainPart}. `;
-    const authorStr = this.getAuthors(authors);
-
-    return isMoreThanFourAuthors
-      ? `${mainPart} / ${authorStr}${selectedSigns.authors}`
-      : `${authorStr} ${mainPart}. `;
+  formatOfName(value: string, fullName: boolean) {
+    return fullName
+      ? this.formateStr(value)
+      : this.formateFirstLetter(value)
   }
 
   /**@generate value for single author and add full name if fullName = true */
@@ -104,19 +96,15 @@ export abstract class BaseComponent {
     name: string,
     lastName: string,
     patronymic: string,
-    fullName?: boolean
+    isFullName?: boolean
   ): string {
     let currentName: string;
     let currentLastName: string;
     let currentPatronymic: string;
 
     currentLastName = this.formateStr(lastName);
-    currentName = fullName
-      ? this.formateStr(name)
-      : this.formateFirstLetter(name);
-    currentPatronymic = fullName
-      ? this.formateStr(patronymic)
-      : this.formateFirstLetter(patronymic);
+    currentName = this.formatOfName(name, isFullName);
+    currentPatronymic = this.formatOfName(patronymic, isFullName);
 
     return `${currentLastName} ${currentName} ${currentPatronymic}`;
   }
@@ -204,11 +192,12 @@ export abstract class BaseComponent {
     return this.transformValue(articleEditor, UPPERCASE, sign);
   }
 
-  public getElectronicCityValue(city: string, year: string) {
+  public getElectronicCityValue(city: string, year: string, isBibliography?: boolean) {
     if (!city && !year) return '';
     const cityStr = this.translateToUppercase(city);
     const yearStr = this.getYearValue(year);
-    return city && year ? ` ${cityStr}${yearStr}.` : ` ${cityStr}${year}.`;
+    const sign = isBibliography ? '. - ' : '.';
+    return city && year ? ` ${cityStr}${yearStr}${sign}` : ` ${cityStr}${year}${sign}`;
   }
 
   public getVolumeValue(
@@ -216,14 +205,10 @@ export abstract class BaseComponent {
     volumeName: string,
     sign: string
   ): string {
-    const volumeNumStr = `${sign}${volumeNum}`;
+    const volumeNumStr = volumeNum ? `${sign}${volumeNum}` : '';
     return volumeName ? this.transformValue(volumeName, UPPERCASE, {
       firstSign: `${volumeNumStr}: `,
       lastSign: ". ",
     }) : `${volumeNumStr}. `;
-  }
-
-  public getUrlValue(url: string): string {
-    return `<a href="${url}">${url}</a>`;
   }
 }

@@ -206,7 +206,7 @@ export class BibliographyService extends BaseComponent {
       true
     );
 
-    const reference = `${partWithAuthors}${copyrigthStr} - ${cityStr}${publisherStr}${yearStr}. - ${pagesStr}.`;
+    const reference = `${partWithAuthors}${copyrigthStr}. - ${cityStr}${publisherStr}${yearStr}. - ${pagesStr}.`;
     const transliteration = this.getTransliteration(reference);
 
     return { reference, transliteration };
@@ -305,7 +305,7 @@ export class BibliographyService extends BaseComponent {
       lastSign: this.selectedSigns.pages,
     });
 
-    const reference = `${bookNameStr}${typeOfWorkStr} / ${copyrightStr}${articleEditorStr}. - ${cityStr}: ${yearStr}. - ${pagesStr}.`;
+    const reference = `${bookNameStr}${typeOfWorkStr} / ${copyrightStr}${articleEditorStr}. - ${cityStr}${yearStr}. - ${pagesStr}.`;
     const transliteration = this.getTransliteration(reference);
 
     return { reference, transliteration };
@@ -381,7 +381,7 @@ export class BibliographyService extends BaseComponent {
       lastSign: this.selectedSigns.pages,
     });
 
-    const reference = `${this.selectedSigns.prices}${numberOfPriceStr}. ${nameOfPriceStr}${approvedStr}: ${dateStr}. - ${cityStr}${yearStr}. - ${pagesStr}.`;
+    const reference = `${this.selectedSigns.prices}${numberOfPriceStr}. ${nameOfPriceStr}${approvedStr} : ${dateStr}. - ${cityStr}${yearStr}. - ${pagesStr}.`;
     const transliteration = this.getTransliteration(reference);
 
     return { reference, transliteration };
@@ -415,9 +415,10 @@ export class BibliographyService extends BaseComponent {
 
     const publisherStr = this.getExtensionValue(publisher, UPPERCASE);
     const cityStr = this.translateToUppercase(city);
+    const pagesStr = this.transformValue(pages);
     const yearStr = this.getYearValue(year);
 
-    const reference = `${nameOfPostcardStr}${typeOfPostcardStr}${copyrightStr}. - ${cityStr}${publisherStr}${yearStr}. - ${pages}.${notatesStr}`;
+    const reference = `${nameOfPostcardStr}${typeOfPostcardStr}${copyrightStr}. - ${cityStr}${publisherStr}${yearStr}. - ${pagesStr}.${notatesStr}`;
     const transliteration = this.getTransliteration(reference);
 
     return { reference, transliteration };
@@ -522,9 +523,8 @@ export class BibliographyService extends BaseComponent {
         ? this.selectedSigns.thesis
         : this.selectedSigns.thesisByDegree,
     });
-    const degreeStr = this.getExtensionValue(degree, LOWERCASE);
+    const degreeStr = this.transformValue(degree);
     const cipherStr = this.transformValue(cipher, LOWERCASE, {
-      firstSign: ": ",
       lastSign: this.selectedSigns.biblSafe,
     });
     const dateOfProtectStr = this.editerDate(dateOfProtect);
@@ -544,7 +544,7 @@ export class BibliographyService extends BaseComponent {
       lastSign: this.selectedSigns.pages,
     });
 
-    const reference = `${author} ${workNameStr}${degreeStr} ${cipherStr}${dateOfProtectStr}${dateApproveStr} / ${fullName}. - ${cityStr}${publisherStr}${yearStr}. - ${pagesStr}.${notatesStr}`;
+    const reference = `${author} ${workNameStr}${degreeStr} : ${cipherStr}${dateOfProtectStr}${dateApproveStr} / ${fullName}. - ${cityStr}${publisherStr}${yearStr}. - ${pagesStr}.${notatesStr}`;
     const transliteration = this.getTransliteration(reference);
     return { reference, transliteration };
   }
@@ -568,24 +568,25 @@ export class BibliographyService extends BaseComponent {
       city,
       notates,
     } = values;
-    const magazineNameStr = magazineName ? `// ${magazineName}` : '';
+
+    const {series, number, volume, scaleOfPages} = this.selectedSigns;
+
+    const magazineNameStr = magazineName ? ` // ${magazineName}` : '';
     const paperNameStr = this.translateToUppercase(paperName);
 
     const partOfMagazineStr = this.transformValue(partOfMagazine, LOWERCASE, {
-      firstSign: volumeOfMagazine
-        ? this.selectedSigns.series
-        : this.selectedSigns.number,
+      firstSign: volumeOfMagazine ? series : number,
     });
     const volumeOfMagazineStr = this.transformValue(
       volumeOfMagazine,
       LOWERCASE,
       {
-        firstSign: this.selectedSigns.volume,
+        firstSign: volume,
       }
     );
 
     const pagesStr = this.getPagesValue(pages, {
-      firstSign: this.selectedSigns.scaleOfPages,
+      firstSign: scaleOfPages,
     });
     const copyrigthStr = this.transformValue(copyrigth, UPPERCASE, {
       firstSign: " / ",
@@ -625,20 +626,23 @@ export class BibliographyService extends BaseComponent {
       city,
       year,
     } = values;
+
+    const {bookEditor, biblBookEditor, scaleOfPages} = this.selectedSigns;
     const bookNameStr = this.translateToUppercase(bookName);
     const paperNameStr = this.translateToUppercase(paperName);
     const authorsOfBookStr = this.transformValue(authorsOfBook, UPPERCASE, {
       firstSign: " / ",
     });
     const articleEditorStr = this.getEditorValue(articleEditor, {
-      firstSign: this.selectedSigns.bookEditor,
+      firstSign: Boolean(authorsOfBook) ? biblBookEditor : bookEditor,
     });
-    const typeOfBookStr = this.getExtensionValue(typeOfBook, LOWERCASE);
 
+    const typeOfBookStr = this.getExtensionValue(typeOfBook, LOWERCASE);
     const cityStr = this.translateToUppercase(city);
     const pagesStr = this.getPagesValue(pages, {
-      firstSign: this.selectedSigns.scaleOfPages,
+      firstSign: scaleOfPages
     });
+    const yearStr = this.getYearValue(year);
 
     const partWithAuthors = this.addAuthorsToRefer(
       authors,
@@ -647,7 +651,6 @@ export class BibliographyService extends BaseComponent {
       this.isMoreThanFourAuthors,
       true
     );
-    const yearStr = this.getYearValue(year);
 
     const reference = `${partWithAuthors} // ${bookNameStr}${typeOfBookStr}${authorsOfBookStr}${articleEditorStr}. - ${cityStr}${yearStr}. - ${pagesStr}.`;
     const transliteration = this.getTransliteration(reference);
@@ -768,10 +771,7 @@ export class BibliographyService extends BaseComponent {
     const resourceStr = this.transformValue(resource);
     const dateStr = this.editerDate(date);
 
-    const appendPart = this.getElectronicCityValue(city, year);
-    const appendPartStr = this.transformValue(appendPart, UPPERCASE, {
-      lastSign: ". - ",
-    });
+    const appendPartStr = this.getElectronicCityValue(city, year, true);
     // const urlStr = this.getUrlValue(url);
 
     const notatesStr = this.transformValue(notates, UPPERCASE, {
@@ -806,10 +806,10 @@ export class BibliographyService extends BaseComponent {
       lastSign: " // ",
     });
     const dateStr = this.editerDate(date);
-    const appendPart = this.getElectronicCityValue(city, year);
+    const appendPart = this.getElectronicCityValue(city, year, true);
     // const urlStr = this.getUrlValue(url);
 
-    const reference = `${pageOfWebsiteStr}${nameOfWebsiteStr}. - ${appendPart}. - URL: ${url} (${this.selectedSigns.date} ${dateStr}).`;
+    const reference = `${pageOfWebsiteStr}${nameOfWebsiteStr}. - ${appendPart}URL: ${url} (${this.selectedSigns.date} ${dateStr}).`;
     const transliteration = this.getTransliteration(reference);
     return { reference, transliteration };
   }
@@ -823,10 +823,10 @@ export class BibliographyService extends BaseComponent {
       lastSign: this.selectedSigns.portal,
     });
     const dateStr = this.editerDate(date);
-    const appendPart = this.getElectronicCityValue(city, year);
+    const appendPart = this.getElectronicCityValue(city, year, true);
     // const urlStr = this.getUrlValue(url);
 
-    const reference = `${nameOfWebsiteStr}. - ${appendPart}. - URL: ${url} (${this.selectedSigns.date} ${dateStr}).`;
+    const reference = `${nameOfWebsiteStr}. - ${appendPart}URL: ${url} (${this.selectedSigns.date} ${dateStr}).`;
     const transliteration = this.getTransliteration(reference);
     return { reference, transliteration };
   }

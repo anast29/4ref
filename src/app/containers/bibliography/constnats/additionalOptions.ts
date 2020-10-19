@@ -92,3 +92,13 @@ export const ADDITIONAL_ELECTRONIC_OPTIONS: Array<TSelectParams> = [
     required: false,
   },
 ];
+
+export const EDITOR_OPTION: Array<TSelectParams> = [
+  {
+    title: "За редакцією:",
+    key: "articleEditor",
+    placeholder: "Л.Н. Яснопольского",
+    className: "col-lg-6 col-sm-6 col-md-6",
+    required: false,
+  }
+];

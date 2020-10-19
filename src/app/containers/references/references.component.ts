@@ -176,11 +176,11 @@ export class ReferencesComponent implements OnInit {
 
   public toFormGroup(items: Array<TSelectParams | TAuthorsModel>): FormGroup {
     let group: any = {};
+    let key: string = "";
 
     for (let i = 0, li = items.length; i < li; i++) {
-      group[items[i].key] = items[i].validators
-        ? new FormControl("", items[i].validators)
-        : new FormControl("");
+      key = items[i].key;
+      group[key] = new FormControl('', items[i].validators || '')
     }
 
     return this.formBuilder.group(group);

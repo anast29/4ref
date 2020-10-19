@@ -15,7 +15,7 @@ export const SELECTED_STANDART_DESCRIPTION: Array<TSelectParams> = [
   {
     title: "Назва стандарту:",
     key: "name",
-    placeholder: "Видання.Оформлення публікацій у журналах і збірниках",
+    placeholder: "Оформлення публікацій у журналах і збірниках",
     className: "col-lg-6 col-sm-6 col-md-6",
     required: true,
     validators: Validators.required,
