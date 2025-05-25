@@ -1,7 +1,7 @@
 # ONAFT4ref
 
 This project was created for automated registration references for scientific works. ONAFT4ref focused on Ukrainian researchers, because this resource registration references for the standarts of Ukrain DSTU 8302:2015. 
-For detailed review follow the link https://4ref.onaft.edu.ua.
+For detailed review follow the link https://4ref.ontu.edu.ua/.
 
 # Technologies
 
